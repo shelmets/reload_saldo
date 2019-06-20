@@ -8,6 +8,9 @@
 	}
 	else
 	{
+		if (array_key_exists('action_change', $_REQUEST)){
+			change($mysqli, $_REQUEST['action_change'], $_REQUEST['action'], $_REQUEST['flat'], $_REQUEST['cash'], $_REQUEST['month']);
+		}
 		if (array_key_exists('action',$_REQUEST)){
 			switch($_REQUEST['action'])
 			{

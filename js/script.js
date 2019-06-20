@@ -29,7 +29,6 @@ function addDelTable(){
 		};*/
 
 	};
-
 	function display(){
 		var secondGroupButtons = $('#secondGroupButtons')[0];
 		addDelTable();
@@ -39,9 +38,7 @@ function addDelTable(){
 			case "payments":
 			case "charges":
 			case "saldo":
-				var responceRangeFlats = sendAjaxRequestRangeFlats("scripts/handler.php", $('#action')[0].value);
-				$("#from").val((responceRangeFlats['min']!=null)?responceRangeFlats['min']:0);
-				$("#to").val((responceRangeFlats['max']!=null)?responceRangeFlats['max']:0);
+				sendAjaxRequestRangeFlats("scripts/handler.php", $('#action')[0].value);
 				secondGroupButtons.style.display = "block";
 				if ($('#gridRadios1').is(':checked')){
 					changeInputYearMonth("month");
@@ -188,10 +185,11 @@ function addDelTable(){
 			type: "GET",
 			data: {action: "rangeFlats", table: table},
 			success: function(response){
-				return $.parseJSON(response);
+				var result =  $.parseJSON(response);
+				$("#from").val(result['min']!=null ?result['min']:0);
+				$("#to").val(result['max']!=null ?result['max']:0);
 			},
 			error: function(response){
-				return null;
 			}
 		});
 	}
@@ -199,9 +197,10 @@ function addDelTable(){
 		$('#filters')[0].style.display = "none";
 		$("#add_delete")[0].style.display = "none";
 		$("#action")[0].style.display = "none";
+		sendAjaxRequestRangeFlats("scripts/handler.php","charges");
 		$('#chargesLink').on("click",function(){
 			$('#action').val("charges");
-			display("block");
+			display();
 			$('#headline').text("Начисления");
 		});
 		$('#paymentsLink').click(function(){
@@ -252,6 +251,8 @@ function addDelTable(){
 				{add_delete.style.display = "block"}
 			else
 				{add_delete.style.display = "none"}
+			$("#action_change").val("add");
+			$("#table_insert").val($("#action")[0].value);
 		});
 		$('#delete').click(function(){
 			add_delete = $("#add_delete")[0];
@@ -259,6 +260,8 @@ function addDelTable(){
 				{add_delete.style.display = "block"}
 			else
 				{add_delete.style.display = "none"}
+			$("#action_change").val("delete");
+			$("#table_insert").val($("#action")[0].value);
 		});
 	// обработка события изменения чекбокса "Видов отображения"
 	$('#gridRadios1').click(function(event){  
@@ -271,10 +274,15 @@ function addDelTable(){
 	$('#apply').click(function(){
 		var mass = $('#inputYearMonth')[0].value.split('-');
 		if (mass.length>1){
-			$('#inputMonth').text(`Расчетный год ${mass[0]} месяц ${monthNames[Number(mass[1])]}`);
+			$('#inputMonth').text(`Расчетный год ${mass[0]} месяц ${monthNames[Number(mass[1])-1]}`);
 		}
 		else{
 			$('#inputMonth').text(`Расчетный год ${mass[0]}`);
 		}
 	});
+	$('#send').click(function(){
+		addDelTable();
+		sendAjaxFormShow("table","ajax_form2", "scripts/handler.php", "GET");
+		return false;
+	})
 });

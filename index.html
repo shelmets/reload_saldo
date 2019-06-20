@@ -76,7 +76,7 @@
             <h1 class="h2" id = "headline">Начисления</h1>
           </div>
           <div class = "form-group row" id = "mainInfo">
-            <label class = "col-5 col-form-label"><h5 id = "inputMonth">Расчетный год ____ месяц ____</h5></label>
+            <label class = "col-5 col-form-label"><h5 id = "inputMonth">Расчетный год 2018 месяц Июнь</h5></label>
           </div>
           <div class = "form-group">
             <button type="button" class="btn btn-primary" id = "filterButton">Фильтры</button>
@@ -139,7 +139,9 @@
             </div>
             </div>
           </form>
-          <form action = "" id = "ajax_form2">
+          <form method = "get" action = "" id = "ajax_form2">
+            <input type="text" name = "action" id = "table_insert" value="charges" style="display: none;">
+            <input type="text" name = "action_change" id = "action_change" value="add" style = "display: none">
             <div class = "form-group" id = "secondGroupButtons">
               <button type="button" class="btn btn-primary" id = "add">Добавить</button>
               <button type="button" class="btn btn-primary" id = "delete">Удалить</button>
@@ -147,16 +149,19 @@
             <div id = "add_delete">
             <div class = "form-group">
             <div class="row">
-              <div class="col-2">
-                <input type="text" class="form-control" placeholder="Квартира">
+              <div class="col-3">
+                <input type="number" min = "0" name="flat" class="form-control" placeholder="Квартира">
               </div>
-              <div class="col-2">
-                <input type="text" class="form-control" placeholder="Сумма">
+              <div class="col-3">
+                <input type="number" min = "0" name = "cash" class="form-control" placeholder="Сумма">
+              </div>
+              <div class="col-3">
+                <input type="month" value="2018-06" name= "month" class="form-control" placeholder="Дата" style="width: 70%">
               </div>
             </div>
           </div>
           <div class = "form-group">
-            <button type="submit" class="btn btn-success" id = "delete">Отправить</button>
+            <button type="submit" class="btn btn-success" id = "send">Отправить</button>
           </div>
           </form>
         </div>

@@ -1,6 +1,13 @@
 <?php
+function change($mysql_conn, $action_change, $table ,$flat, $cash, $date){
+	if ($action_change=='add'){
+		$mysql_conn->query("insert into {$table}(number_flat,date,cash) values ({$flat},'{$date}-01',{$cash})");
+	} else if ($action_change=='delete'){
+		$mysql_conn->query("delete from {$table} where number_flat={$flat} and date='{$date}-01' and cash={$cash}");
+	}
+}
 function getRangeFlats($mysql_conn, $table){
-	return $mysql_conn->query("select min(number_flat) as min, max(number_flat) as max from payments")->fetch_assoc();
+	return $mysql_conn->query("select min(number_flat) as min, max(number_flat) as max from {$table}")->fetch_assoc();
 }
 function execute_sql_script($script_path){
 	$command = "mysql -u{$user} -p{$pass} "
