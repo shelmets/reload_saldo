@@ -156,12 +156,14 @@ function addDelTable(){
 			$('#inputYearMonth').attr("value", "2018");
 			$('#inputYearMonth').attr("min", "0");
 			$('#inputMonth').text("Расчетный год ____");
+			$('#to')[0].setAttribute("disabled", "disabled");
 		} else if (str == "month") {
 			$('#labelInput').text("Месяц:");
 			$('#inputYearMonth').attr("type", "month");
 			$('#inputYearMonth').attr("style", "width:70%");
 			$('#inputYearMonth').attr("value", "2018-06");
 			$('#inputMonth').text("Расчетный год ____ месяц ____");
+			$('#to').removeAttr("disabled");
 		}
 	}
 	function sendAjaxFormShow(result_form, ajax_form, url, type){

@@ -15,19 +15,19 @@
 			switch($_REQUEST['action'])
 			{
 				case "payments":
-					$result = show_payments($mysqli);
+					$result = show_payments($mysqli, $_REQUEST['gridRadios'], $_REQUEST['from'], $_REQUEST['to'], $_REQUEST['inputYearMonth'], $_REQUEST['select']);
 					break;
 				case "charges":
-					$result = show_charges($mysqli);
+					$result = show_charges($mysqli, $_REQUEST['gridRadios'], $_REQUEST['from'], $_REQUEST['to'], $_REQUEST['inputYearMonth'], $_REQUEST['select']);
 					break;
 				case "saldo":
-					$result = show_saldo($mysqli);
+					$result = show_saldo($mysqli, $_REQUEST['gridRadios'], $_REQUEST['from'], $_REQUEST['to'], $_REQUEST['inputYearMonth'], $_REQUEST['select']);
 					break;
 				case "sheet1":
-					$result = show_sheet1($mysqli, $_REQUEST['']);
+					$result = show_sheet1($mysqli, $_REQUEST['inputYearMonth']);
 					break;
 				case "sheet2":
-					$result = show_sheet2($mysqli);
+					$result = show_sheet2($mysqli, $_REQUEST['inputYearMonth']);
 					break;
 				case "rangeFlats":
 					$result = getRangeFlats($mysqli, $_REQUEST['table']);

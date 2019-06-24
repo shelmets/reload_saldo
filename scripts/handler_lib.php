@@ -15,9 +15,20 @@ function execute_sql_script($script_path){
 
 	$output = shell_exec($command . '/database_saldo.sql');
 }
-function show_payments($mysql_conn){
+function show_payments($mysql_conn, $type_display, $from, $to, $year_month, $sort){
 	$result  = array("action"=>"payments","id"=>array(),"flat"=>array(), "date"=>array(), "cash"=>array());
-	$res_payments = $mysql_conn->query("select * from payments");
+	$sql = "select * from charges";
+	if ($type_display=="1"){
+		$sql = "select * from payments where {$from}>=number_flat and {$to}<=number_flat and date='{$year_month}-01'";
+	} else if ($type_display=="2"){
+		$sql = "select * from payments where {$from}=number_flat and year(date)={$year_month}";
+	}
+	if ($sort=="increase"){
+			$sql = $sql." order by number_flat";
+		} else if ($sort=="desending"){
+			$sql = $sql." order by number_flat desc";
+	}
+	$res_payments = $mysql_conn->query($sql);
 	while ($row = $res_payments->fetch_assoc())
 	{
 		$result["id"][] = $row["id_payment"];
@@ -27,9 +38,20 @@ function show_payments($mysql_conn){
 	}
 	return $result;
 }
-function show_charges($mysql_conn){
+function show_charges($mysql_conn, $type_display, $from, $to, $year_month, $sort){
 	$result  = array("action"=>"charges","id"=>array(),"flat"=>array(), "date"=>array(), "cash"=>array());
-	$res_payments = $mysql_conn->query("select * from charges");
+	$sql = "select * from charges";
+	if ($type_display=="1"){
+		$sql = "select * from charges where {$from}>=number_flat and {$to}<=number_flat and date='{$year_month}-01'";
+	} else if ($type_display=="2"){
+		$sql = "select * from charges where {$from}=number_flat and year(date)={$year_month}";
+	}
+	if ($sort=="increase"){
+			$sql = $sql." order by number_flat";
+		} else if ($sort=="desending"){
+			$sql = $sql." order by number_flat desc";
+	}
+	$res_payments = $mysql_conn->query($sql);
 	while ($row = $res_payments->fetch_assoc())
 	{
 		$result["id"][] = $row["id_charge"];
@@ -39,9 +61,20 @@ function show_charges($mysql_conn){
 	}
 	return $result;
 }
-function show_saldo($mysql_conn){
+function show_saldo($mysql_conn, $type_display, $from, $to, $year_month, $sort){
 	$result  = array("action"=>"saldo","id"=>array(),"flat"=>array(), "date"=>array(), "payment"=>array(), "charge"=>array());
-	$res_payments = $mysql_conn->query("select * from saldo");
+	$sql = "select * from saldo";
+	if ($type_display=="1"){
+		$sql = "select * from saldo where {$from}>=number_flat and {$to}<=number_flat and date='{$year_month}-01'";
+	} else if ($type_display=="2"){
+		$sql = "select * from saldo where {$from}=number_flat and year(date)={$year_month}";
+	}
+	if ($sort=="increase"){
+			$sql = $sql." order by number_flat";
+		} else if ($sort=="desending"){
+			$sql = $sql." order by number_flat desc";
+	}
+	$res_payments = $mysql_conn->query($sql);
 	while ($row = $res_payments->fetch_assoc())
 	{
 		$result["id"][] = $row["id_saldo"];
